@@ -1,0 +1,4 @@
+S- Single Responsibility Principle: One class should have only 1 responsibility; a Class should have 1 reason to change
+O- Open/Closed Principle: Software components should be open for extension but closed for modification
+L- Liskov's Substitution Principle: Derived Types must be completely substituble for their base type (i.e. Ostrich extends Bird so Bird shouldn't have fly()). Subclasses only extend not reduce.
+
