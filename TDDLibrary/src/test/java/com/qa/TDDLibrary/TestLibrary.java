@@ -1,94 +1,115 @@
 package com.qa.TDDLibrary;
 
-import java.awt.List;
-import java.util.Date;
+import java.util.ArrayList;
+
 import org.junit.Test;
 
 public class TestLibrary {
 
 	@Test
 	public void canCheckOut() {
-		
-		Person steve = new Person();
-		steve.checkOut("A Midsomer's Night Dream", "Shakespeare")
-		System.out.println(steve.checkedOut());
-		assert(steve.checkedOut.length() == 1);
+
+		Person steve = new Person("Steve", 42);
+		Book amnd = new Book("A Midsomer's Night's Dream", "Shakespeare", "1595");
+		steve.checkOut(amnd);
+		assert (steve.checked().size() == 1);
 	}
 
 	@Test
 	public void canCheckIn() {
-		
-		Person steve = new Person();
-		steve.checkOut("A Midsomer's Night Dream", "Shakespeare"));
-		System.out.println(steve.checkedOut());
-		steve.checkIn("A Midsomer's Night's Dream");
-		assert(steve.checkedOut.length() == 0)
-		
+
+		Person steve = new Person("Steve", 42);
+		Book amnd = new Book("A Midsomer's Night's Dream", "Shakespeare", "1595");
+
+		steve.checkOut(amnd);
+		steve.checkIn(amnd);
+		assert (steve.checked().size() == 0);
+
 	}
 
 	@Test
 	public void canAdd() {
 
-		List<Item> inventory = new InventoryManager.itemList();
-		inventory.add((Book) "A Midsomer's Nights Dream", "Shakespeare");
-		assert (inventory.length() == 1);
+		Film avp = new Film("Alien vs. Predator", "Paul W. S. Anderson", "22 October 2004");
+		Book amnd = new Book("A Midsomer's Night's Dream", "Shakespeare", "1595");
+		Map OS1 = new Map("Shepton Mallet", 1, "1964");
+		avp.addActor("Lance Henriksen");
+		avp.addActor("Peepee Poopoo");
+		avp.removeActor("Peepee Poopoo");
+		ArrayList<Item> inventory = InventoryManager.getItemList();
+		System.out.println(avp.getActors());
+		inventory.add(amnd);
+		int P = inventory.size();
+		inventory.add(avp);
+		inventory.add(OS1);
+		System.out.println(inventory);
+		assert (inventory.size() == P + 2);
 
 	}
 
 	@Test
 	public void canRemove() {
 
-		List<Item> inventory = new InventoryManager.itemList();
-		inventory.add((Book) "A Midsomer's Nights Dream", "Shakespeare");
-		assert (inventory.length() == 1);
-		inventory.remove("A Midsomer's Nights Dream");
-		assert (inventory.length() == 0);
+		ArrayList<Item> inventory = InventoryManager.getItemList();
+		Book amnd = new Book("A Midsomer's Night's Dream", "Shakespeare", "1595");
+
+		inventory.add(amnd);
+		int K = inventory.size();
+		inventory.remove(amnd);
+
+		assert (inventory.size() == K - 1);
 
 	}
 
 	@Test
 	public void canUpdate() {
+		Book amnd = new Book("A Midsomer's Night's Dream", "Shakespeare", "1595");
 
-		List<Item> inventory = new InventoryManager.itemList();
-		inventory.add((Book) "A Midsomer's Nights Dream", "Shakespeare");
-		assert (inventory[0].name() == "A Midsomer's Nights Dream");
-		inventory[0].update("A Midsummer's Nights Dream", "Shakespeare");
-		assert (inventory[0].name() == "A Midsummer's Nights Dream");
+		InventoryManager.add(amnd);
+		assert (InventoryManager.getItemList().get(0).getTitle().toString() == "A Midsomer's Night's Dream");
+		InventoryManager.getItemList().get(0).updateTitle("A Midsummer's Night's Dream");
+		assert (InventoryManager.getItemList().get(0).getTitle().toString() == "A Midsummer's Night's Dream");
 
 	}
 
 	@Test
 	public void canRegister() {
+		int M = PersonManager.getPersonList().size();
 
-		List<Person> customers = new PersonManager.customerList;
-		customers.add("Joe Bloggs", 42);
-		assert(customers.length() == 1);
-		
+		Person joe = new Person("Joe Bloggs", 42);
+		PersonManager.add(joe);
+
+		assert (PersonManager.getPersonList().size() == M + 1);
+
 	}
 
 	@Test
 	public void canBan() {
-		List<Person> customers = new PersonManager.customerList;
-		customers.add("Joe Bloggs", 42);
-		customers.add("Loud Talker", 21);
-		customers.add("Nice old Lady", 67);
-		customers.ban("Loud Talker");
-		assert(customers.length() == 2);
-		System.out.println(customers);
-		
-		
-		
-		
+		ArrayList<Person> customers = PersonManager.getPersonList();
+		Person joe = new Person("Joe Bloggs", 42);
+		Person loudy = new Person("Loud Talker", 21);
+		Person niceLady = new Person("Greta", 67);
+
+		customers.add(joe);
+		customers.add(loudy);
+		customers.add(niceLady);
+
+		int N = customers.size();
+		PersonManager.ban("Loud Talker");
+		assert (customers.size() == N - 1);
+
 	}
 
 	@Test
 	public void canUpdatePerson() {
-		
-		List<Person> customers = new PersonManager.customerList;
-		customers.add("Joe Bloggs", 42);
-		customers[0].update(43);
-		assert(customers[0].age == 43);
-		
+
+		Person joe = new Person("Joe Bloggs", 42);
+		ArrayList<Person> customers = PersonManager.getPersonList();
+		customers.add(joe);
+		customers.get(0).update(43);
+		customers.get(0).update("John Bloggs");
+		assert (customers.get(0).getAge() == 43);
+		assert (customers.get(0).getName() == "John Bloggs");
 
 	}
 
