@@ -3,41 +3,40 @@ public class Square {
 
 	private boolean ship;
 	private boolean bombed;
-	private String shipName;
+	private int shipNumber;
 
 	public Square() {
 		this.ship = false;
 		this.bombed = false;
-		this.shipName = null;
+		this.shipNumber = -1;
 	}
 
-	public void bomb() {
+	public void bomb(Ship[] shipList) {
 		this.bombed = true;
+		if (this.shipNumber != 0) {
+			shipList[this.shipNumber].bomb();
+		}
 	}
 
-	public void addShip(String shipName) {
+	public void addShip(int shipNumber) {
 		this.ship = true;
-		this.shipName = shipName;
+		this.shipNumber = shipNumber;
 	}
 
 	public String shipped() {
-		if (ship) {
-			return shipName;
+		if (ship()) {
+			return "Hit!";
 		} else {
-			return "Nothing";
+			return "Miss";
 		}
 	}
 
 	public boolean bombed() {
-		return bombed;
-	}
-
-	public String toString() {
-		return "I exist";
+		return this.bombed;
 	}
 
 	public boolean ship() {
-		return ship;
+		return this.ship;
 	}
 
 }

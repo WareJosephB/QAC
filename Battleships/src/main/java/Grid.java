@@ -1,10 +1,8 @@
 public class Grid {
 
-	static private int X = 3;
-	static private int Y = 3;
-	static private int x = 0;
-	static private int y = 0;
-	static private int z = 0;
+	static private int X = 10;
+	static private int Y = 10;
+	static Square[][][] oneGrid = new Square[Grid.getX()][Grid.getY()][2];
 
 	public static int getX() {
 		return X;
@@ -14,40 +12,42 @@ public class Grid {
 		return Y;
 	}
 
-	private static Square[][][] oneGrid = new Square[getX()][getY()][2];
-
-	while(z<2)
-	{
-		while (x < X) {
-			while (y < Y) {
-				oneGrid[x][y][z] = new Square();
-				y += 1;
-			}
-			y = 0;
-			x += 1;
-		}
-		y = 0;
-		x = 0;
-		z += 1;
-	}
-
 	public boolean bomb(int X, int Y, int P) {
 		Square thisSquare = oneGrid[X][Y][P];
 
 		if (thisSquare.bombed()) {
 			return false;
 		} else {
-			thisSquare.bomb();
+			Ship[][] shipListList = { Player1.ships, Player2.ships };
 			System.out.println(thisSquare.shipped());
+			thisSquare.bomb(shipListList[P]);
 			return true;
 		}
 
 	}
 
-	public static boolean addShip(int X, int Y, int length, String shipName, boolean OrientationHorizontal, int P) {
+	public static boolean addShip(int X, int Y, int shipNumber, boolean OrientationHorizontal, int P) {
+		String Orientation;
+		if (OrientationHorizontal) {
+			Orientation = "Horizontally";
+		} else {
+			Orientation = "Vertically";
+		}
 
-		if (X + length > getX() || Y + length > getY()) {
-			System.out.println("Not enough space");
+		Ship[] shipList;
+
+		if (P == 0) {
+			shipList = Player1.ships;
+		} else {
+			shipList = Player2.ships;
+
+		}
+
+		System.out.println("You are currently placing the " + shipList[shipNumber].getName() + ", of length "
+				+ shipList[shipNumber].getLength() + ", " + Orientation);
+
+		if (X + shipList[shipNumber].getLength() > getX() || Y + shipList[shipNumber].getLength() > getY()) {
+			System.out.println("Ship is falling off edge, try again.");
 			return false;
 
 		} else {
@@ -57,39 +57,41 @@ public class Grid {
 
 			if (OrientationHorizontal) {
 				i = 0;
-				while (!shipInWay && i < length) {
+				while (!shipInWay && i < shipList[shipNumber].getLength()) {
 					shipInWay = oneGrid[X + i][Y][P].ship();
 					i += 1;
 				}
 				if (!shipInWay) {
 					i = 0;
-					while (i < length) {
-						oneGrid[X + i][Y][P].addShip(shipName);
+					System.out
+							.println(shipList[shipNumber].getName() + " placed at (" + X + "," + Y + ") succesfully.");
+					while (i < shipList[shipNumber].getLength()) {
+						oneGrid[X + i][Y][P].addShip(shipNumber);
 						i += 1;
 
 					}
 				} else {
-					System.out.println("Not enough space");
+					System.out.println("Ship in the way, try again.");
 					return false;
 				}
 
 			} else {
 
 				i = 0;
-				while (!shipInWay && i < length) {
+				while (!shipInWay && i < shipList[shipNumber].getLength()) {
 					shipInWay = oneGrid[X][Y + i][P].ship();
 					i += 1;
 				}
 				if (!shipInWay) {
 					i = 0;
-					while (i < length) {
-						oneGrid[X][Y + i][P].addShip(shipName);
+					while (i < shipList[shipNumber].getLength()) {
+						oneGrid[X][Y + i][P].addShip(shipNumber);
 						i += 1;
 
 					}
 
 				} else {
-					System.out.println("Not enough space");
+					System.out.println("Ship in the way, try again.");
 					return false;
 				}
 			}
