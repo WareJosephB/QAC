@@ -1,0 +1,43 @@
+<DOCTYPE HTML>
+<html>
+
+<head>
+
+<script type="text/javascript">
+function fizzbuzz(finish, fizz, buzz){
+  document.getElementById("result").innerHTML = "";
+  for (var i = 1; i - 1 < finish; i ++){
+    document.getElementById("result").innerHTML += "<br>";
+    if (i % 3 !== 0 && i % 5 !== 0){
+        document.getElementById("result").innerHTML += i;
+        continue;
+    }
+    if (i % 3 == 0){
+        document.getElementById("result").innerHTML += fizz + " ";
+    }
+    if (i % 5 == 0){
+      document.getElementById("result").innerHTML += buzz;
+    }
+  }
+}
+</script>
+
+</head>
+
+<body>
+
+If a number is divisible by 3 returns fizz, if divisible by 5 returns buzz, if divisible by both returns fizz+buzz<br>
+Else returns the number.
+
+
+  Input number: <input type="number" id = "input"><br>
+  Fizz:  <input type="text" id = "fizz" value = "fizz"><br>
+  Buzz:  <input type="text" id = "buzz" value = "buzz"><br>
+  <button type="button" onclick="fizzbuzz(document.getElementById('input').value, document.getElementById('fizz').value, document.getElementById('buzz').value)">Fizz it up</button>
+  <div id = "result"></div>
+
+
+
+</body>
+
+</html>
