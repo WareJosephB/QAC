@@ -1,0 +1,158 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+
+<script type="text/JavaScript">
+
+function checkPrelude3(x){
+  if (document.getElementById("player"+x+"corp").value != 5 && (document.getElementById("player"+x+"prelude3").value)){
+      document.getElementById("player"+x+"prelude3").value = 0;
+      alert("Only Valley Trust can have 3 preludes.");
+    }
+  checkPrelude(x);
+}
+
+
+function checkPrelude(){
+  var NumberPlayers = 2;
+  var preludes = [];
+  for (var i = 1; i < NumberPlayers + 1; i ++){
+    for (var j = 1; j < 4; j ++){
+      var pointer = document.getElementById("player"+i+"prelude"+j);
+          preludes.push(pointer.value);
+          console.log(pointer.value)
+    }
+  }
+  var nonzeros preludes.filter(i => i !== 0);
+  var uniques = [new Set(preludes)]
+
+  if (nonzeros.length != uniques.length){
+    alert("Preludes should be unique.");
+  }
+
+}
+
+
+
+
+function checkScores(){
+  if (document.getElementById("pointsPlayer1").value < document.getElementById("pointsPlayer2").value){
+    document.getElementById("pointsPlayer2").style="color:red";
+    alert("1st Place has less points than 2nd place.");
+  } else {
+    document.getElementById("pointsPlayer2").style="color:green";
+    document.getElementById("pointsPlayer1").style="color:green";
+  }
+}
+</script>
+
+</head>
+
+<body>
+
+<form id = "gameInfo">
+
+<table style="width:100%">
+ <tr>
+  <th>Place</th>
+  <th>Name</th>
+  <th>Corporation</th>
+  <th>Prelude 1</th>
+  <th>Prelude 2</th>
+  <th>Prelude 3</th>
+  <th>Cities</th>
+  <th>Greeneries</th>
+  <th>Points</th>
+  <th>Awards Won</th>
+  <th>Awards Runner up</th>
+  <th>Milestones</th>
+ </tr>
+ <tr id = "player1">
+   <td>1</td>
+   <td><input type="text" name="name" id = "namePlayer1" ></td>
+   <td><select id="player1corp" onchange="checkPrelude3('1')">
+    <option value="1">Mining Guild</option>
+    <option value="2">UMNI</option>
+    <option value="3">Credicor</option>
+    <option value="4">Phobolog</option>
+    <option value="5">Valley Trust</option>
+   </select> </td>
+   <td><select id = "player1prelude1" onchange="checkPrelude()">
+    <option value=0></option>
+    <option value="1">Huge Asteroid</option>
+    <option value="2">Aquifer</option>
+    <option value="3">Acquired Space Agency</option>
+    <option value="4">Friendly Bank</option>
+    <option value="5">Biolab</option>
+   </select></td>
+   <td><select id = "player1prelude2" onchange="checkPrelude()">
+    <option value=0></option>
+    <option value="1">Huge Asteroid</option>
+    <option value="2">Aquifer</option>
+    <option value="3">Acquired Space Agency</option>
+    <option value="4">Friendly Bank</option>
+    <option value="5">Biolab</option>
+   </select></td>
+   <td><select  id = "player1prelude3" onchange="checkPrelude3('1')">
+    <option value=0></option>
+    <option value="1">Huge Asteroid</option>
+    <option value="2">Aquifer</option>
+    <option value="3">Acquired Space Agency</option>
+    <option value="4">Friendly Bank</option>
+    <option value="5">Biolab</option>
+   </select></td>
+   <td><input type="Number" name="greeneries" id = "greeneriesPlayer1"/></td>
+   <td><input type="Number" name="cities" id = "citiesPlayer1"/></td>
+   <td><input type="Number" name="points" id = "pointsPlayer1"/></td>
+   <td>1</td>
+   <td>1</td>
+   <td>1</td>
+ </tr>
+ <tr id="player2">
+   <td>2</td>
+   <td><input type="text" name="name" id = "namePlayer2" onchange="checkPrelude3('2')"></td>
+   <td><select  id = "player2corp">
+    <option value="1">Mining Guild</option>
+    <option value="2">UMNI</option>
+    <option value="3">Credicor</option>
+    <option value="4">Phobolog</option>
+    <option value="5">Valley Trust</option>
+   </select> </td>
+   <td><select  id = "player2prelude1" onchange="checkPrelude()">
+     <option value=0></option>
+    <option value="1">Huge Asteroid</option>
+    <option value="2">Aquifer</option>
+    <option value="3">Acquired Space Agency</option>
+    <option value="4">Friendly Bank</option>
+    <option value="5">Biolab</option>
+   </select></td>
+   <td><select  id = "player2prelude2" onchange="checkPrelude()">
+    <option value=0></option>
+    <option value="1">Huge Asteroid</option>
+    <option value="2">Aquifer</option>
+    <option value="3">Acquired Space Agency</option>
+    <option value="4">Friendly Bank</option>
+    <option value="5">Biolab</option>
+   </select></td>
+   <td><select  id = "player2prelude3" onchange="checkPrelude3('2')">
+    <option value=0></option>
+    <option value="1">Huge Asteroid</option>
+    <option value="2">Aquifer</option>
+    <option value="3">Acquired Space Agency</option>
+    <option value="4">Friendly Bank</option>
+    <option value="5">Biolab</option>
+   </select></td>
+   <td><input type="Number" name="greeneries" id = "greeneriesPlayer2"/></td>
+   <td><input type="Number" name="cities" id = "citiesPlayer2"/></td>
+   <td><input type="Number" name="points" id = "pointsPlayer2" onchange="checkScores()" onselect="document.getElementById('pointsPlayer2')style='color:black'"/></td>
+   <td>1</td>
+   <td>1</td>
+   <td>1</td>
+ </tr>
+</table>
+</form>
+
+</body>
+
+</html>
